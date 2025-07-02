@@ -68,7 +68,7 @@ class GaussianHarness(ProgramHarness):
             extra_outfiles = ["gaussian.wfx"]
         else:
             extra_outfiles = None
-        exe_success, proc = self.execute(job_inputs, extra_outfiles=extra_outfiles)
+        exe_success, proc = self.execute(job_inputs, extra_outfiles=extra_outfiles, ncores=config.ncores)
         if exe_success:
             result = self.parse_output(proc["outfiles"], input_data)
             return result
@@ -82,6 +82,7 @@ class GaussianHarness(ProgramHarness):
         extra_commands: Optional[List[str]] = None,
         scratch_name: Optional[str] = None,
         timeout: Optional[int] = None,
+        ncores: int = 2,
     ) -> Tuple[bool, Dict[str, Any]]:
         """
         Run the gaussian single point job and fchk conversion
@@ -92,12 +93,11 @@ class GaussianHarness(ProgramHarness):
         if extra_outfiles is not None:
             outfiles.extend(extra_outfiles)
         gaussian_version = self.get_version()
-        commands = [gaussian_version, "gaussian.com"]
         scratch_directory = inputs["scratch_directory"]
 
         # remember before formatting lig.chk is binary, run calculation
         exe_success, proc = execute(
-            command=commands,
+            command=["%s -p=%d gaussian.com" % (gaussian_version, ncores)], shell=True,
             infiles=infiles,
             outfiles=outfiles,
             scratch_directory=scratch_directory,
