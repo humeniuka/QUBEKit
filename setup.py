@@ -38,8 +38,8 @@ setup(
             "BondChargeCorrection = qubekit.cli.utils:BondChargeCorrectionHandler"
         ]
     },
-    version=versioneer.get_version(),
-    cmdclass=versioneer.get_cmdclass(),
+    version='1.0.0', #versioneer.get_version(),
+    #cmdclass=versioneer.get_cmdclass(),
     license="MIT",
     classifiers=[
         "Intended Audience :: Science/Research",
