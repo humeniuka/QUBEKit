@@ -4,10 +4,17 @@ from typing import Dict, List, Tuple
 from openff.toolkit.topology import (
     Molecule,
     Topology,
-    TopologyAtom,
-    TopologyVirtualSite,
-    VirtualSite,
+    Atom as TopologyAtom,
 )
+
+try:
+    from openff.toolkit.topology import (
+        TopologyVirtualSite,
+        VirtualSite
+    )
+except ImportError as err:
+    print(err)
+
 from openff.toolkit.typing.engines.smirnoff.parameters import (
     AngleHandler,
     BondHandler,
