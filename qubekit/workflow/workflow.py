@@ -8,7 +8,7 @@ from typing_extensions import Literal
 import qubekit
 from qubekit.bonded import ModSeminario, QForceHessianFitting
 from qubekit.charges import DDECCharges, MBISCharges
-from qubekit.fragmentation import WBOFragmentation
+from qubekit.fragmentation import PfizerFragmentation, WBOFragmentation
 from qubekit.molecules import Ligand
 from qubekit.nonbonded import LennardJones612, VirtualSites, get_protocol
 from qubekit.parametrisation import XML, AnteChamber, OpenFF
@@ -30,8 +30,8 @@ class WorkFlow(SchemaBase):
         LocalResource(),
         description="The local resource options for the workflow like total memory and cores available.",
     )
-    fragmentation: Optional[WBOFragmentation] = Field(
-        WBOFragmentation(),
+    fragmentation: Union[PfizerFragmentation, WBOFragmentation] = Field(
+        PfizerFragmentation(),
         description="The fragmentation method which should be used to speed up the torsion optimisation stage.",
     )
     parametrisation: Union[OpenFF, XML, AnteChamber] = Field(
