@@ -11,6 +11,8 @@ from pydantic import Field, PrivateAttr
 from torsiondrive import td_api
 from typing_extensions import Literal
 
+from geometric.errors import LinearTorsionError
+
 from qubekit.engines.geometry_optimiser import GeometryOptimiser
 from qubekit.molecules import TorsionData, TorsionDriveData
 from qubekit.utils import constants
@@ -488,14 +490,36 @@ def optimise_grid_point(
         opt_mol.coordinates = (input_coords * constants.BOHR_TO_ANGS).reshape(
             (opt_mol.n_atoms, 3)
         )
-        result_mol, full_result = geometry_optimiser.optimise(
-            molecule=opt_mol,
-            qc_spec=qc_spec,
-            local_options=local_options,
-            allow_fail=False,
-            return_result=True,
-            extras=optimiser_settings,
-        )
+        try:
+            result_mol, full_result = geometry_optimiser.optimise(
+                molecule=opt_mol,
+                qc_spec=qc_spec,
+                local_options=local_options,
+                allow_fail=False,
+                return_result=True,
+                extras=optimiser_settings,
+            )
+        except LinearTorsionError as error:
+            print(error)
+            i,j,k,l = dihedral
+            print(f"Linear torsion detected, retrying with frozen angles {i,j,k} and {j,k,l}")
+            optimiser_settings["constraints"]["freeze"] = [
+                {"type": "angle", "indices": [i,j,k]},
+                {"type": "angle", "indices": [j,k,l]}
+            ]
+            opt_mol = copy.deepcopy(molecule)
+            input_coords = np.array(coordinates)
+            opt_mol.coordinates = (input_coords * constants.BOHR_TO_ANGS).reshape(
+                (opt_mol.n_atoms, 3)
+            )
+            result_mol, full_result = geometry_optimiser.optimise(
+                molecule=opt_mol,
+                qc_spec=qc_spec,
+                local_options=local_options,
+                allow_fail=False,
+                return_result=True,
+                extras=optimiser_settings,
+            )
         # make the result class
         result_data = GridPointResult(
             dihedral_angle=dihedral_angle,
