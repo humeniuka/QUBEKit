@@ -499,7 +499,7 @@ def optimise_grid_point(
                 return_result=True,
                 extras=optimiser_settings,
             )
-        except LinearTorsionError as error:
+        except (RuntimeError, LinearTorsionError) as error:
             print(error)
             i,j,k,l = dihedral
             print(f"Linear torsion detected, retrying with frozen angles {i,j,k} and {j,k,l}")
