@@ -138,7 +138,11 @@ class RDKit:
 
         mol = AllChem.AddHs(mol)
 
-        AllChem.EmbedMolecule(mol, randomSeed=1)
+        status = AllChem.EmbedMolecule(mol, randomSeed=1)
+        if status == -1:
+            # retry with random coordinates
+            AllChem.EmbedMolecule(mol, maxAttempts=1000, useRandomCoords=True)
+
         # put the map index back on the atoms
         for atom in mol.GetAtoms():
             atom.SetAtomMapNum(atom_index_to_map.get(atom.GetIdx(), 0))
