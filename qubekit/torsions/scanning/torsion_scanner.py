@@ -119,8 +119,9 @@ class TorsionScan1D(StageBase):
                 bond_atoms = [
                     a.atom_index for a in drive_mol.atoms if a.map_index in (a1, a2)
                 ]
-                # get the bond with the correct atom indices
-                bonds.append(drive_mol.get_bond_between(*bond_atoms))
+                if bond_atoms:
+                    # get the bond with the correct atom indices
+                    bonds.append(drive_mol.get_bond_between(*bond_atoms))
             bonds = bonds or None
         else:
             # first find all rotatable bonds, while removing the unwanted scans
