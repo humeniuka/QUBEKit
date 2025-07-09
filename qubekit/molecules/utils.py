@@ -138,10 +138,7 @@ class RDKit:
 
         mol = AllChem.AddHs(mol)
 
-        status = AllChem.EmbedMolecule(mol, randomSeed=1)
-        if status == -1:
-            # retry with random coordinates
-            AllChem.EmbedMolecule(mol, maxAttempts=1000, useRandomCoords=True)
+        AllChem.EmbedMolecule(mol, randomSeed=1)
 
         # put the map index back on the atoms
         for atom in mol.GetAtoms():
@@ -537,6 +534,7 @@ class ReadInputProtein:
                     atomic_symbol = atomic_symbol[0]
 
                 atom_name = f"{atomic_symbol}{atom_count}"
+
                 # TODO should we use a protein pdb package for this?
                 qube_atom = Atom(
                     atomic_number=Element().number(atomic_symbol),
