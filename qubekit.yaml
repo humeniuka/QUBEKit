@@ -1,8 +1,7 @@
-name: qubekit
+name: 
 channels:
-  - psi4
   - conda-forge
-  - nodefaults
+  - psi4
 dependencies:
   - _libgcc_mutex=0.1=conda_forge
   - _openmp_mutex=4.5=2_gnu
@@ -45,11 +44,11 @@ dependencies:
   - cloudpickle=3.1.1=pyhd8ed1ab_0
   - colorama=0.4.6=pyhd8ed1ab_1
   - comm=0.2.2=pyhd8ed1ab_1
-  - conda=25.3.1=py310hff52083_0
+  - conda=24.11.3=py310hff52083_0
   - conda-libmamba-solver=24.9.0=pyhd8ed1ab_0
-  - conda-pack=0.8.1=pyhd8ed1ab_1
+  - conda-pack=0.9.1=pyhcf101f3_0
   - conda-package-handling=2.4.0=pyh7900ff3_2
-  - conda-package-streaming=0.11.0=pyhd8ed1ab_1
+  - conda-package-streaming=0.12.0=pyhd8ed1ab_0
   - contourpy=1.3.1=py310h3788b33_0
   - coverage=7.8.0=py310h89163eb_0
   - cpython=3.10.16=py310hd8ed1ab_3
@@ -75,6 +74,7 @@ dependencies:
   - fonts-conda-ecosystem=1=0
   - fonts-conda-forge=1=0
   - fonttools=4.57.0=py310h89163eb_0
+  - forcebalance=1.9.5=py310h5a539fb_0
   - fqdn=1.5.1=pyhd8ed1ab_1
   - freetype=2.12.1=h267a509_2
   - freetype-py=2.3.0=pyhd8ed1ab_0
@@ -231,6 +231,8 @@ dependencies:
   - openff-interchange=0.2.0=pyhd8ed1ab_1
   - openff-interchange-base=0.2.0=pyhd8ed1ab_1
   - openff-models=0.1.2=pyhca7485f_0
+  - openff-toolkit=0.12.1=pyhd8ed1ab_2
+  - openff-toolkit-base=0.12.1=pyhd8ed1ab_2
   - openff-units=0.2.2=pyhd8ed1ab_1
   - openff-utilities=0.1.15=pyhd8ed1ab_0
   - openjpeg=2.5.2=h488ebb8_0
@@ -372,20 +374,4 @@ dependencies:
   - zstandard=0.23.0=py310ha75aee5_1
   - zstd=1.5.6=ha6fb4c9_0
   - pip:
-      - amberutils==21.0
-      - ase==3.24.0
-      - edgembar==0.2
-      - forcebalance==1.9.6
-      - llvmlite==0.44.0
-      - mmpbsa-py==16.0
-      - numba==0.61.2
-      - openff-toolkit==0.10.7
-      - packmol-memgen==2024.2.9
-      - pdb4amber==22.0
-      - pulp==2.1
-      - pycolt==0.6.0
-      - pymsmt==22.0
-      - pytraj==2.0.6
-      - qforce==0.6.3
-      - sander==22.0
-      - seaborn==0.13.2
+    - qubekit==1.0.0
